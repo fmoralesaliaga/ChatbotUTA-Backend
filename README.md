@@ -17,25 +17,25 @@ A continuación, algunos comandos útiles para utilizar este proyecto:
 
 ### Instalar dependencias
 ```bash
-npm install  
+    npm install  
 ```
 
 ### Lanzar con Node
 ```bash
-npm start  
+    npm start  
 ```
 
 ### Lanzar con Nodemon
 ```bash
-npm run dev  
+    npm run dev  
 ```
 
 ## Dependencias requeridas
 ```bash
-npm install express pg  
+    npm install express pg  
 ```
 
 ## Dependencias de desarrollo
 ```bash
-npm install nodemon --save-dev  
+    npm install nodemon --save-dev  
 ```
