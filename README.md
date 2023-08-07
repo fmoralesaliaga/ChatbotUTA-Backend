@@ -1,8 +1,6 @@
-# ChatbotUTA-Backend
+# API REST
 
-## API REST NODE POSTGRESQL
-
-### Tabla de rutas
+API REST NODE POSTGRESQL
 
 | Tipo   | Ruta                        | Función Controladora | Objeto JSON de respuesta                                       |
 |--------|-----------------------------|----------------------|--------------------------------------------------------------|
@@ -18,16 +16,26 @@
 A continuación, algunos comandos útiles para utilizar este proyecto:
 
 ### Instalar dependencias
-npm install
+```bash
+npm install  
+```
 
 ### Lanzar con Node
-npm start
+```bash
+npm start  
+```
 
 ### Lanzar con Nodemon
-npm run dev
+```bash
+npm run dev  
+```
 
 ## Dependencias requeridas
-npm install express pg
+```bash
+npm install express pg  
+```
 
 ## Dependencias de desarrollo
-npm install nodemon --save-dev
+```bash
+npm install nodemon --save-dev  
+```
