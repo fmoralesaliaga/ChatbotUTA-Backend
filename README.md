@@ -1,6 +1,6 @@
-# API REST
+# API REST EXPRESS POSTGRES PRISMA
 
-API REST NODE POSTGRESQL
+api rest utilizando node con express, prisma y de base de datos local con postgreSQL
 
 | Tipo   | Ruta                        | Función Controladora | Objeto JSON de respuesta                                       |
 |--------|-----------------------------|----------------------|--------------------------------------------------------------|
@@ -17,25 +17,85 @@ A continuación, algunos comandos útiles para utilizar este proyecto:
 
 ### Instalar dependencias
 ```bash
-    npm install  
+npm install  
 ```
 
 ### Lanzar con Node
 ```bash
-    npm start  
+npm start  
 ```
 
 ### Lanzar con Nodemon
 ```bash
-    npm run dev  
+npm run dev  
 ```
 
 ## Dependencias requeridas
+
+### express & dotenv
 ```bash
-    npm install express pg  
+npm install express dotenv  
 ```
 
 ## Dependencias de desarrollo
+
+### nodemon
 ```bash
-    npm install nodemon --save-dev  
+npm install nodemon --save-dev  
+```
+
+### prisma
+```bash
+npm install @prisma/client --save-dev  
+```
+
+## ¡ATENCION!
+Para realizar un lanzamiento inmediato deberas utilizar los siguientes acciones:
+
+.env --> DATABASE_URL=postgresql://USUARIO:CONTRASEÑA@localhost:5432/NOMBRE_BD
+
+```bash
+npm i
+npx prisma generate
+```
+
+## PosgrestSQL
+
+Crear la base de datos
+```bash
+CREATE DATABASE chatbot;
+```
+
+## Prisma: datos y comandos utiles
+
+### Inicializar prisma
+Creara la carpeta "prisma" en la cual se hayara el archivo schema.prisma, ademas creara un archivo .env para que realizes la conexion a la base de datos
+```bash
+npx prisma init
+```
+
+### Ejemplo utilizado de modelo de tabla
+model User {
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
+  pass     String
+  rol      String
+}
+
+### Estructura de la coneccion
+DATABASE_URL=postgresql://USUARIO:CONTRASEÑA@localhost:5432/NOMBRE_BD
+
+### Genera el esquema
+```bash
+npx prisma generate
+```
+
+### Creara el sql de migracion, deberas poner un nombre a esto y luego requerirlo llamandolo cuando lo necesites.
+```bash
+npx prisma migrate dev
+```
+
+### Forzar sincronizacion
+```bash
+npx prisma db push --force-reset
 ```
