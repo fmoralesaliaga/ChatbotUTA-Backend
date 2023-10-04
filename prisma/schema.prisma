@@ -1,0 +1,56 @@
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+model User {
+  id        Int        @id @default(autoincrement())
+  name      String
+  email     String     @unique
+  password  String
+  profiles  Profile[]  // Define la relación hacia los perfiles
+  departments Department[] // Define la relación hacia los departamentos
+}
+
+model Profile {
+  id           Int          @id @default(autoincrement())
+  name         String
+  permissions  Permission[] // Define la relación hacia los permisos
+  users        User[]       // Define la relación hacia los usuarios
+}
+
+model Permission {
+  id       Int        @id @default(autoincrement())
+  name     String
+  profiles Profile[]  // Define la relación hacia los perfiles
+}
+
+model Department {
+  id   Int    @id @default(autoincrement())
+  name String
+  questions Question[]// Define la relación hacia las preguntas
+  users User[]// Define la relación hacia los usuarios
+}
+
+model Question {
+  id             Int        @id @default(autoincrement())
+  text           String
+  type           String
+  department     Department @relation(fields: [departmentId], references: [id])
+  departmentId   Int
+  answers  Answer[]
+  parentQuestion Question? @relation("SubQuestions", fields: [parentQuestionId], references: [id])
+  parentQuestionId Int?
+  subQuestions   Question[]  @relation("SubQuestions")
+}
+
+model Answer {
+  id        Int       @id @default(autoincrement())
+  text      String
+  question  Question @relation(fields: [questionId], references: [id])
+  questionId Int
+} 
