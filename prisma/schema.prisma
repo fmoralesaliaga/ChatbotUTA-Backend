@@ -32,13 +32,13 @@ model Permission {
 model Department {
   id   Int    @id @default(autoincrement())
   name String
-  questions Question[]// Define la relación hacia las preguntas
-  users User[]// Define la relación hacia los usuarios
+  questions Question[]  // Define la relación hacia las preguntas
+  users User[]  // Define la relación hacia los usuarios
 }
 
 model Question {
   id             Int        @id @default(autoincrement())
-  text           String
+  text           String?
   type           String
   department     Department @relation(fields: [departmentId], references: [id])
   departmentId   Int
