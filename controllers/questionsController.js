@@ -8,8 +8,9 @@ async function createQuestion(req, res) {
       data: {
         text: req.body.text,
         type: req.body.type,
-        departmentId: req.body.departmentId,
-        parentQuestionId: req.body.parentQuestionId,
+        departmentId: parseInt(req.body.departmentId),
+        parentQuestionId: parseInt(req.body.parentQuestionId),
+        answerId: parseInt(req.body.answerId),
       },
     });
     return res.status(201).json(newQuestion);
@@ -54,15 +55,39 @@ async function getQuestionById(req, res) {
 async function updateQuestion(req, res) {
   const { id } = req.params;
   try {
-    const updatedQuestion = await prisma.question.update({
-      where: { id: parseInt(id) },
-      data: {
-        text: req.body.text,
-        type: req.body.type,
-        departmentId: req.body.departmentId,
-        parentQuestionId: req.body.parentQuestionId,
-      },
-    });
+    let updatedQuestion;
+    if (req.body.answerId !== null && req.body.answerId !== undefined) {
+      // Se proporcionó un valor para answerId, intenta asignar una respuesta.
+      const answer = await prisma.answer.findUnique({
+        where: { id: req.body.answerId },
+      });
+
+      if (!answer) {
+        return res.status(404).json({ error: 'La respuesta no existe.' });
+      }
+
+      // Si la respuesta existe, actualiza el campo answerId de la pregunta.
+      updatedQuestion = await prisma.question.update({
+        where: { id: parseInt(id) },
+        data: {
+          answerId: req.body.answerId,
+          // Otros campos de pregunta que puedas querer actualizar.
+        },
+      });
+    } else {
+      // No se proporcionó un valor para answerId, actualiza otros campos de pregunta.
+      updatedQuestion = await prisma.question.update({
+        where: { id: parseInt(id) },
+        data: {
+          text: req.body.text,
+          type: req.body.type,
+          departmentId: req.body.departmentId,
+          parentQuestionId: req.body.parentQuestionId,
+          // Otros campos de pregunta que puedas querer actualizar.
+        },
+      });
+    }
+
     return res.status(200).json(updatedQuestion);
   } catch (error) {
     console.error('Error al actualizar pregunta:', error);

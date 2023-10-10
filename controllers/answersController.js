@@ -7,9 +7,22 @@ async function createAnswer(req, res) {
     const newAnswer = await prisma.answer.create({
       data: {
         text: req.body.text,
-        questionId: req.body.questionId,
+        questionId: parseInt(req.body.questionId)
       },
     });
+
+    // Obtén el answerId de la respuesta recién creada
+    const answerId = newAnswer.id;
+
+        // Actualiza la pregunta para asignarle el answerId
+        const questionId = parseInt(req.body.questionId);
+        await prisma.question.update({
+          where: { id: questionId },
+          data: {
+            answerId: answerId
+          },
+        });
+
     return res.status(201).json(newAnswer);
   } catch (error) {
     console.error('Error al crear respuesta:', error);

@@ -4,11 +4,19 @@ const prisma = new PrismaClient();
 // Crear un nuevo usuario
 async function createUser(req, res) {
   try {
+    
     const newUser = await prisma.user.create({
       data: {
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
+        profiles:{
+          connect: req.body.selectedProfileIds.map((profileId) => ({id: profileId}))
+        },
+        departments:{
+          connect: req.body.selectedDepartmentIds.map((departmentId) => ({id: departmentId}))
+        },
+
       },
     });
     return res.status(201).json(newUser);
